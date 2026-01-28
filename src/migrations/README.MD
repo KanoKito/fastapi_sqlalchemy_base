@@ -3,9 +3,12 @@
 Краткий и практичный справочник по основным командам Alembic.
 
 ## Инициализация проекта
+```
 alembic init alembic                          # обычная (синхронная) инициализация
+```
+```
 alembic init -t async alembic                 # асинхронная версия (рекомендуется)
-
+```
 ## Создание миграций
 alembic revision -m "create users table"                            # пустая миграция вручную
 alembic revision --autogenerate -m "add user last_login column"     # автогенерация по моделям
