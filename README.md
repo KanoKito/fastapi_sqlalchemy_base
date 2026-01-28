@@ -80,3 +80,25 @@
     ├── models              Описание моделей БД
     └── schemas             Описание схем данных для FastAPI на основе Pydantic
 ```
+## Запуск приложения
+
+### Требования
+- Python 3.14+
+- uv (рекомендуется) или poetry/pip
+- PostgreSQL 15+ (локально или в Docker)
+### Способы запуска
+
+#### 1. Через uv (рекомендуемый способ)
+
+```bash
+# Установка зависимостей (если ещё не сделано)
+uv sync
+
+# Запуск с автоматической перезагрузкой при изменении кода
+uv run uvicorn src.main:app --reload
+
+# Запуск на другом порту
+uv run uvicorn src.main:app --reload --port 8080
+
+# Запуск без перезагрузки (production-like)
+uv run uvicorn src.main:app --host 0.0.0.0 --port 8000

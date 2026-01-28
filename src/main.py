@@ -1,14 +1,16 @@
+# src/main.py
 import sys
+from pathlib import Path
 
-import uvicorn
+sys.path.insert(0, str(Path(__file__).parent))
+
 from loguru import logger
-
 from api.fastapi_app import get_fastapi_app
 from core.config import BASE_DIR, settings
 
 
-def loger_config() -> None:
-    """Конфигурация логирования."""
+def configure_logger() -> None:
+    """Настройка логгера Loguru."""
     logger.remove()
     logger.add(
         BASE_DIR / 'log/fasql.log',
@@ -28,7 +30,18 @@ def loger_config() -> None:
     )
 
 
+# Важно: приложение создаётся на уровне модуля
+app = get_fastapi_app()
+
 if __name__ == '__main__':
-    loger_config()
-    logger.info('Запуск приложения.')
-    uvicorn.run(get_fastapi_app(), host='0.0.0.0', port=settings.app_port)
+    configure_logger()
+    logger.info("Запуск приложения через if __name__ == '__main__'")
+    # Можно оставить для ручного запуска python src/main.py
+    import uvicorn
+
+    uvicorn.run(
+        'src.main:app',
+        host='0.0.0.0',
+        port=settings.app_port,
+        reload=True,
+    )
